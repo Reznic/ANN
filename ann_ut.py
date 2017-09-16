@@ -7,7 +7,7 @@ from ann import Ann
 from layers import Layer, InputLayer
 
 class ForwardTest(TestCase):
-    """Test the ann's forward flow"""
+    """Test the ann's feed-forward flow"""
     HIDDEN_LAYER_SIZE = 3
     INPUT = np.array([1,2,3,4])
     WEIGHTS = (np.array([[0.1], [0.2], [0.3], [0.4]]),
@@ -42,7 +42,7 @@ class ForwardTest(TestCase):
                              self.WEIGHTS[2]))
 
     def test_full_forward(self):
-        output = self.ann.get_output(self.INPUT)
+        output = self.ann.feed_forward(self.INPUT)
         self.assert_array_equal(output, self.EXPECTED_OUTPUT, 
                                 "Wrong forward output: %s instead of"
                                 " %s" % (output, 
@@ -54,7 +54,7 @@ class ForwardTest(TestCase):
                                     0.84553473491646525, 
                                     0.77381857426945377])
 
-        layer_output = self.ann.layers[1].stimulate(layer_input)
+        layer_output = self.ann.layers[1].feed_forward(layer_input)
         self.assert_array_equal(layer_output, expected_output,
                                 "Wrong hidden layer output. %s "
                                 "instead %s" % (layer_output, 

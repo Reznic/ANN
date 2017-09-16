@@ -22,7 +22,7 @@ class Ann(object):
             if layer.weights is NotImplemented:
                 layer.init_weights(prev_layer.size)
 
-    def get_output(self, inputs):
+    def feed_forward(self, inputs):
         """Calculate output of the ANN, for a given input vector.
         
         Args:
@@ -32,7 +32,6 @@ class Ann(object):
             numpy.ndarray. output vector from the ANN.
         """
         for layer in self.layers:
-            inputs = layer.stimulate(inputs)
+            inputs = layer.feed_forward(inputs)
 
         return inputs
-

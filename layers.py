@@ -24,11 +24,11 @@ class Layer(object):
         self.weights = weights
         self.activation = activation
 
-    def stimulate(self, inputs):
+    def feed_forward(self, inputs):
         """Stimulate inputs through the layer.
         
         Args:
-            inputs (numpy.ndarray): input vector to stimulate the 
+            inputs (numpy.ndarray): input vector to feed_forward the
                 layer neurons with.
 
         Returns:
@@ -64,7 +64,7 @@ class InputLayer(Layer):
     """ANN input layer."""
     INPUT_SIZE = 1
 
-    def stimulate(self, inputs):
+    def feed_forward(self, inputs):
         try:
             product = self.weights.flatten() * inputs
         except ValueError as error:

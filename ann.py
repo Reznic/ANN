@@ -35,3 +35,9 @@ class Ann(object):
             inputs = layer.feed_forward(inputs)
 
         return inputs
+
+
+    def back_propagate(self):
+        """ """
+        pass
+

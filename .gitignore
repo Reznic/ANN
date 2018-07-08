@@ -102,3 +102,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Pycharm
+.idea
+
+# Vim
+*.swp

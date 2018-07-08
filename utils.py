@@ -11,18 +11,13 @@ SIGMOID = DFunc(func=lambda x: 1 / (1 + np.exp(-x)),
 ERROR_FUNCTION = DFunc(func=lambda y, o: 0.5 * ((y - o) ** 2),
                        deriv=lambda y, o: -(y - o))
 
-ASCENT = 1
-DESCENT = -1
-
-
-def gradient_descent(x, deriv, step, direction=DESCENT):
+def gradient_descent(x, deriv, step):
     """Gradient descent on a function.
     
     Args:
         x (number): the current x value guess for minimum.
         deriv (func): the derivative of the target function.
         step (number): the climb step rate hyperparameter.
-        direction (number): descent or ascent.
     """
-    return x + (direction * step * deriv(x))
+    return x - step * deriv(x)
 

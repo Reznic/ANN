@@ -6,7 +6,7 @@ DFunc = namedtuple("DFunc", "func deriv")
 
 # Todo: sigmoid derivative could be optimized: recalc of sig(x).
 SIGMOID = DFunc(func=lambda x: 1 / (1 + np.exp(-x)),
-                deriv=lambda x: SIGMOID.func(x) * (1 - SIGMOID.func(x)))
+                deriv=lambda y: y * (1 - y))
 
 ERROR_FUNCTION = DFunc(func=lambda y, o: 0.5 * ((y - o) ** 2),
                        deriv=lambda y, o: -(y - o))

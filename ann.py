@@ -37,7 +37,23 @@ class Ann(object):
         return inputs
 
 
-    def back_propagate(self):
+    def back_propagate(self, inputs, expected_output):
         """ """
-        pass
+        ys = [inputs]
+        gradients = []
+        accumulated_gradient = None
+        
+        # Forward pass
+        for layer in self.layers:
+            ys.append(layer.feed_forward(ys[-1]))
+
+        # Gradient calculation
+        accumulated_gradient = (ys[-1] - expected_output)
+        for layer, y in zip(reversed(self.layers), reversed(ys)):
+            accumulated_gradient *= layer.activation.deriv(y)
+
+        # Weights update
+        for grads, layer in zip(gradients, reversed(self.layers)):
+            # grad_descent(layer.weights, grads)
+            layer.weights - self.alpha * grads
 

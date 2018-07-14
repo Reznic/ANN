@@ -134,7 +134,7 @@ class ForwardTest(BaseAnnTest):
 
 class RandWeightsTest(BaseAnnTest):
     """Test ANN random weights initialization."""
-    LAYER_SIZES = [3,7,5]
+    LAYER_SIZES = [3, 7, 5]
 
     def setUp(self):
         self.ann = Ann(InputLayer(self.LAYER_SIZES[0]), 

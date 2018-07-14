@@ -64,8 +64,7 @@ class Layer(object):
 
     def get_biases(self):
         """
-
-        :return: list. The biases of this layer.
+        return: list. The biases of this layer.
         """
         return self.weights[:,[0]].flatten()
 

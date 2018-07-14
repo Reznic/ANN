@@ -18,7 +18,8 @@ class Layer(object):
     WEIGHT_MIN = 0.001
     INPUT_SIZE = NotImplemented
 
-    def __init__(self, size, next_layer=None, weights=NotImplemented, activation=SIGMOID.func):
+    def __init__(self, size, next_layer=None, weights=NotImplemented,
+                 activation=SIGMOID.func):
         self.size = size
         self.next_layer = next_layer
         self.weights = weights
@@ -48,24 +49,20 @@ class Layer(object):
 
         return self.activation(product)
 
- .  def _gradient_descent(self, derivatives):
+    def _gradient_descent(self, derivatives):
         """ """
         self.weights -= self.alpha * derivatives
-
 
     def back_propagation(self, inputs, expected_y):
         """ """
         y = self.feed_forward(inputs)
 
-        if self.next_layer:
-            accum_deriv = self.next_layer.back_propagation(y, expected_y)
-            accum_deriv *= None
+        # Todo: what if self.next_layer == None?
+        accum_deriv = self.next_layer.back_propagation(y, expected_y)
+        accum_deriv *= self.activation.deriv(y)
 
-        else:
-            accum_deriv = (y - expected_y) * self.activation.deriv(y)
-        
         # derivatives calculation
-        derivs = accum_deriv
+        derivs = np.row_stack(accum_deriv) * self._add_bias(inputs)
 
         # weights update
         self._gradient_descent(derivs)
@@ -128,3 +125,19 @@ class InputLayer(Layer):
             raise LayerInputSizeError(error.message)
 
         return self.activation(product)
+
+    def back_propagation(self, inputs, expected_y):
+        """ """
+        y = self.feed_forward(inputs)
+
+        accum_deriv = (y - expected_y) * self.activation.deriv(y)
+
+        # derivatives calculation
+        derivs = np.row_stack(accum_deriv) * self._add_bias(inputs)
+
+        # weights update
+        self._gradient_descent(derivs)
+
+        # Return W * (y-Y)*y*(1-y)
+        return self.weights * accum_deriv[:, np.newaxis]
+

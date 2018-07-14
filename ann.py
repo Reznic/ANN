@@ -6,9 +6,16 @@ class Ann(object):
     Attributes:
         layers (list): the neuron layers in the network.
     """
+
     def __init__(self, *layers):
         self.layers = layers
+        self._connect_layers()
         self.init_layers_weights()
+
+    def _connect_layers(self):
+        reduce(self.layers,
+               lambda l1, l2: l1.set_next(l2); return l2)
+        self.layers[-1].set_next(None)
 
     def init_layers_weights(self):
         """Initialize weight factors in all the net layers."""

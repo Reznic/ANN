@@ -18,10 +18,14 @@ class Layer(object):
     WEIGHT_MIN = 0.001
     INPUT_SIZE = NotImplemented
 
-    def __init__(self, size, weights=NotImplemented, activation=SIGMOID.func):
+    def __init__(self, size, next_layer=None, weights=NotImplemented, activation=SIGMOID.func):
         self.size = size
+        self.next_layer = next_layer
         self.weights = weights
         self.activation = activation
+
+    def set_next(self, next_layer):
+        self.next_layer = next_layer
 
     def feed_forward(self, inputs):
         """Stimulate inputs through the layer.
@@ -43,6 +47,30 @@ class Layer(object):
             raise LayerInputSizeError(error.message)
 
         return self.activation(product)
+
+ .  def _gradient_descent(self, derivatives):
+        """ """
+        self.weights -= self.alpha * derivatives
+
+
+    def back_propagation(self, inputs, expected_y):
+        """ """
+        y = self.feed_forward(inputs)
+
+        if self.next_layer:
+            accum_deriv = self.next_layer.back_propagation(y, expected_y)
+            accum_deriv *= None
+
+        else:
+            accum_deriv = (y - expected_y) * self.activation.deriv(y)
+        
+        # derivatives calculation
+        derivs = accum_deriv
+
+        # weights update
+        self._gradient_descent(derivs)
+
+        return accum_deriv
 
     def init_weights(self, input_size=None, min_w=WEIGHT_MIN,
                      max_w=WEIGHT_MAX):

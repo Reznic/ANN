@@ -8,4 +8,5 @@ setup(name='ann',
       author_email='reznic.tal@example.com',
       license='MIT',
       packages=['ann'],
-      zip_safe=False)
+      zip_safe=False,
+      install_requires=["numpy==1.12.1"])

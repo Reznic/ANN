@@ -1,4 +1,5 @@
 """Artifitial neural network module."""
+from errors import EmptyNet
 
 class Ann(object):
     """Artificial neural network.
@@ -8,6 +9,9 @@ class Ann(object):
     """
     def __init__(self, *layers):
         self.layers = layers
+        if len(self.layers) == 0:
+            raise EmptyNet()
+
         self.init_layers_weights()
 
     def init_layers_weights(self):
